@@ -47,6 +47,7 @@ sudo apt install -y lutris vlc steam nextcloud-desktop
 sudo apt install -y flatpak plasma-discover-backend-flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub com.discordapp.Discord
+flatpak install -y flathub io.missioncenter.MissionCenter
 
 # fuck discords "Update feature"
 mkdir -p ~/.var/app/com.discordapp.Discord/config/discord/
