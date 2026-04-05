@@ -40,7 +40,7 @@ sudo apt update
 sudo apt install -y code eza
 
 sudo apt install -y net-tools iputils-ping wget git filezilla
-sudo apt install -y lutris vlc steam
+sudo apt install -y lutris vlc steam nextcloud-desktop
 
 
 # Flatpaks
