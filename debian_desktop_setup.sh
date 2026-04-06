@@ -67,6 +67,37 @@ echo '{
 
 # Focusrite Config
 sudo bash -c 'echo "options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1" > /etc/modprobe.d/snd_usb_audio.conf'
+mkdir -p ~/.config/wireplumber/wireplumber.conf.d/
+echo 'monitor.alsa.rules = [
+  {
+    matches = [
+      {
+        node.name = "~alsa_card.*Scarlett.*"
+      }
+    ]
+    actions = {
+      update-props = {
+        api.alsa.use-acp = false
+        api.alsa.use-ucm = false
+      }
+    }
+  }
+]' > ~/.config/wireplumber/wireplumber.conf.d/50-focusrite.conf
+sudo update-initramfs -u
+pactl set-card-profile alsa_card.usb-Focusrite_Scarlett_2i2_USB_* pro-audio
+sudo apt install -y usbutils
+mkdir -p ~/.local/bin
+echo '#!/bin/bash
+sleep 2
+
+DEVICE=$(lsusb | grep 1235: | awk '{print $6}')
+
+if [ -n "$DEVICE" ]; then
+    sudo usbreset "$DEVICE"
+fi' > ~/.local/bin/reset-scarlett.sh
+chmod +x ~/.local/bin/reset-scarlett.sh
+mkdir -p ~/.config/autostart-scripts
+ln -s ~/.local/bin/reset-scarlett.sh ~/.config/autostart-scripts/
 
 
 # Dev Tools
